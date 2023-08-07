@@ -1,0 +1,31 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/nextjs,react
+# Edit at https://www.toptal.com/developers/gitignore?templates=nextjs,react
+
+### NextJS ###
+# Next build dir
+.next/
+_static
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+.env
+
+/public/sitemap.xml
+/public/server-sitemap.xml
+/public/server-sitemap-2.xml
+/public/robots.txt
