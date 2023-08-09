@@ -147,18 +147,27 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
             className={`max-w-2xl mx-auto post ${postStyles.post}`}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-          {!decisionLists.includes("9") && post.blogLinkStatus != "E" ? (
+          {decisionLists.length === 0 ? (
             <div className="text-center">
-              {/* <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
-                Free Download 😀
-              </h3> */}
+              {/* You can show a loading indicator here */}
+              <p>Wait a second...</p>
             </div>
           ) : (
-            <div className="text-center">
-              <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
-                Pay to get Download Link
-              </h3>
-            </div>
+            <>
+              {!decisionLists.includes("9") && post.blogLinkStatus !== "E" ? (
+                <div className="text-center">
+                  <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
+                    Free Download 😀
+                  </h3>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
+                    Pay to get Download Link
+                  </h3>
+                </div>
+              )}
+            </>
           )}
           {decisionLists.includes("9") && post.blogLinkStatus != "E" && (
             <p className="text-center">
@@ -183,7 +192,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
                       onClick={
                         // () => getMeDownloadLinkAndRedirect(download.id)
                         // handleDownloadBySlug(false)
-                        ()=>window.open(download.short_link)
+                        () => window.open(download.short_link)
                       }
                       className="hover:shadow-xl hover:scale-95 hover:bg-indigo-700 m-1 sm:my-2 transition duration-150 text-xs sm:text-base font-bold inline-block bg-pink-600 rounded-full text-white px-4 py-2 sm:px-8 sm:py-3 cursor-pointer"
                     >
@@ -193,7 +202,8 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
                 ))}
             </div>
           )}
-          {/* {!decisionLists.includes("9") && post.blogLinkStatus != "E" && (
+
+          {decisionLists.length !== 0 && !decisionLists.includes("9") && post.blogLinkStatus != "E" && (
             <div className="mt-8 text-center">
               {showDownload ? (
                 <>
@@ -239,7 +249,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
                 </>
               )}
             </div>
-          )} */}
+          )}
           <blockquote
             className={`otroBlockquote ${postStyles.otroBlockquote} mt-6`}
           >
