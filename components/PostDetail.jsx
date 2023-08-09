@@ -149,9 +149,9 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
           />
           {!decisionLists.includes("9") && post.blogLinkStatus != "E" ? (
             <div className="text-center">
-              <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
+              {/* <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
                 Free Download 😀
-              </h3>
+              </h3> */}
             </div>
           ) : (
             <div className="text-center">
@@ -193,7 +193,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
                 ))}
             </div>
           )}
-          {!decisionLists.includes("9") && post.blogLinkStatus != "E" && (
+          {/* {!decisionLists.includes("9") && post.blogLinkStatus != "E" && (
             <div className="mt-8 text-center">
               {showDownload ? (
                 <>
@@ -239,7 +239,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
                 </>
               )}
             </div>
-          )}
+          )} */}
           <blockquote
             className={`otroBlockquote ${postStyles.otroBlockquote} mt-6`}
           >
