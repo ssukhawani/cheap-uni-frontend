@@ -4,6 +4,7 @@ module.exports = {
   siteUrl,
   sitemapSize: 7000,
   generateRobotsTxt: true,
+  exclude: ['/sitemap.xml','/server-sitemap.xml','/server-sitemap-2.xml'],
   robotsTxtOptions: {
     additionalSitemaps: [
       `${siteUrl}sitemap.xml`,

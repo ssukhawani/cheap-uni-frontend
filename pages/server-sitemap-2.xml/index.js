@@ -1,4 +1,4 @@
-import { getServerSideSitemap } from "next-sitemap";
+import { getServerSideSitemapLegacy } from "next-sitemap";
 import { getBlogListForSitemap } from "../../services";
 
 export const getServerSideProps = async (ctx) => {
@@ -10,7 +10,8 @@ export const getServerSideProps = async (ctx) => {
     changefreq: "daily",
   }));
 
-  return getServerSideSitemap(ctx, [...fieldsBlogs]);
+  return getServerSideSitemapLegacy(ctx, [...fieldsBlogs]);
 };
 
-export default function Site() {}
+// Default export to prevent next.js errors
+export default function Sitemap() {}

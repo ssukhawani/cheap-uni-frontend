@@ -26,6 +26,7 @@ sketch
 .env
 
 /public/sitemap.xml
+/public/sitemap-0.xml
 /public/server-sitemap.xml
 /public/server-sitemap-2.xml
 /public/robots.txt
