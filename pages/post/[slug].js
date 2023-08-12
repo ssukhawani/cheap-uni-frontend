@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   fetchBlogDetails,
   getDecisionList,
   getDownloadsBySlug,
   getTDBlogList,
+  membershipDetails,
 } from "../../services";
 import { useQuery, dehydrate } from "react-query";
 import { useRouter } from "next/router";
@@ -27,6 +28,7 @@ import TakenDown from "../../components/TakenDown";
 import Contribution from "../../components/Contibution";
 import HowToDownload from "../../components/HowToDownload";
 import CrossSell from "../../components/CrossSell";
+import { getStoredUser } from "../../utility/localStorage";
 
 export function handleDownload(links, isTD) {
   const content = `<html><body><h1>${
@@ -84,6 +86,8 @@ const PostDetails = () => {
   const router = useRouter();
   const slug = router.query?.slug;
   const [decisionLists, setDecisionLists] = useState([]);
+  const [user, setUser] = useState(null);
+
 
   const { data: post, isLoading } = useQuery(
     [queryKeys.BLOG_DETAILS, slug],
@@ -95,6 +99,24 @@ const PostDetails = () => {
       // so it will fetch update data in background
     }
   );
+
+
+  useMemo(() => {
+    async function fetchData() {
+      const storedUser = getStoredUser();
+      if (!storedUser) {
+      } else {
+        try {
+          const response = await membershipDetails();
+          const updatedData = response.data;
+          setUser({ ...storedUser, ...updatedData });
+        } catch (error) {
+          console.error("Error fetching membership details:", error);
+        }
+      }
+    }
+    fetchData();
+  }, [slug]);
 
   useEffect(() => {
     getTDBlogList().then((result) => {
@@ -144,6 +166,7 @@ const PostDetails = () => {
                 setDecisionLists={setDecisionLists}
                 decisionLists={decisionLists}
                 handleDownloadBySlug={handleDownloadBySlug}
+                user={user}
               />
               <Author author={post?.author} />
               <CommentForm slug={post.slug} />
@@ -152,7 +175,7 @@ const PostDetails = () => {
             <div className="col-span-1 lg:col-span-4">
               <div className="relative lg:sticky top-8">
                 {/* <Contribution /> */}
-                <CrossSell />
+                {!user ? <CrossSell /> : user.role != "P" ? <CrossSell /> : <></>}
                 <HowToDownload />
                 <DigitalOcean />
                 <div className="rounded-lg my-4">

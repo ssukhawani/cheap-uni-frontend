@@ -14,6 +14,7 @@ export const apiEndpoints = {
   LOGIN: "auth/jwt/create", // Login api ( username and password -->> access token & refresh token)
   DECISION: "api/pages/final/decision",
   LOGGED_IN_USER_DETAILS: "auth/users/me/", // Get Logged In User Details
+  MEMBERSHIP_DETAILS: "api/members/me/", // Get Logged In User Membership Details
   PROMOTE_CONTACT: "api/pages/promote/contact/",
   CHECKOUT: "api/checkout/",
   PURCHASED_COURSES:"api/purchase_history/",
@@ -26,5 +27,7 @@ export const apiEndpoints = {
   SUBMIT_BLOG_REQUEST:"api/blog-requests/",
   ACTIVATE: "auth/users/activation/",
   RESET_PASS: "auth/users/reset_password/",
-  RESET_PASS_CONFIRMATION: "auth/users/reset_password_confirm/"
+  RESET_PASS_CONFIRMATION: "auth/users/reset_password_confirm/",
+  GET_ALL_PLANS: "api/plans/",
+  CREATE_MEMBERSHIP_REQUEST:"api/create-membership-request/"
 };

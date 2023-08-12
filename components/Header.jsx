@@ -187,7 +187,7 @@ const Header = ({ tags, pagesInit }) => {
                       >
                         <ul className="z-10 w-52 border-r bg-white absolute rounded left-0 shadow mt-16 top-0 ">
                           <li
-                            onClick={() => router.push("/myprofile/reset-password")}
+                            onClick={() => router.push("/myprofile/dashboard")}
                             className="p-2 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:bg-indigo-700 hover:text-white focus:text-indigo-700 focus:outline-none hover:font-bold"
                           >
                             <div className="flex items-center">
@@ -225,7 +225,7 @@ const Header = ({ tags, pagesInit }) => {
           </div>
           <div className="flex items-center">
             {Boolean(user?.access) && (
-              <Link key={"my-courses"} href={`/myprofile/reset-password`}>
+              <Link key={"my-courses"} href={`/myprofile/dashboard`}>
                 <svg
                   className="fill-stroke "
                   width={24}

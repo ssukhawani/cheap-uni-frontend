@@ -4,21 +4,13 @@ import postStyles from "./post-styles.module.css";
 import Head from "next/head";
 import { Modal } from "react-responsive-modal";
 import SupportSuccess from "./SupportSuccess";
-import Timer from "./Timer";
-import { getDownloadsById } from "../services";
-import {
-  checkIsNoob,
-  getMeDownloadLinkAndRedirect,
-} from "../utility/functions";
 import { AdsContainer } from "./AdsContainer";
-import { getCartItems, setCartItems } from "../utility/localStorage";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import Link from "next/link";
 
 export const getMeRandomNum = () => Math.floor(Math.random() * 4);
 
-const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
+const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
   const router = useRouter();
   const [flag, setFlag] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState("");
@@ -26,6 +18,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
   const [initialTimerFlag, setInitialTimerFlag] = useState(false);
   const [decisionNo, setDecisionNo] = useState("");
   const initialRenderRef = useRef(true);
+
 
   useEffect(() => {
     if (initialRenderRef.current) {
@@ -58,16 +51,6 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
   //     toast.warning("Course already added in the cart");
   //   }
   // };
-
-  const checkIsNotNoobThenLinkValidate = (id) => {
-    const isNoob = checkIsNoob();
-    if (!isNoob) {
-      handleDownloadBySlug(false);
-    } else {
-      // getMeDownloadLinkAndRedirect(id) // deprecated here only
-      handleDownloadBySlug(false);
-    }
-  };
 
   return (
     <>
@@ -147,17 +130,19 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
             className={`max-w-2xl mx-auto post ${postStyles.post}`}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-          {decisionLists.length === 0 ? (
+          {!user ? (
             <div className="text-center">
               {/* You can show a loading indicator here */}
               <p>Wait a second...</p>
             </div>
           ) : (
             <>
-              {!decisionLists.includes("9") && post.blogLinkStatus !== "E" ? (
+              {user &&
+              (user.role === "P" || user.role == "A") &&
+              post.blogLinkStatus !== "E" ? (
                 <div className="text-center">
                   <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
-                    Free Download 😀
+                    You are Pro Member Download whatever you want...😀
                   </h3>
                 </div>
               ) : (
@@ -169,7 +154,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
               )}
             </>
           )}
-          {decisionLists.includes("9") && post.blogLinkStatus != "E" && (
+          {post.blogLinkStatus != "E" && (
             <p className="text-center">
               Watch 👉
               <Link
@@ -177,13 +162,39 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
                 rel="noopener noreferrer"
                 className="cursor-pointer text-blue-500 text-sm font-bold inline-block rounded-lg py-1 m-1 mx-2  active:scale-90 transition duration-150"
                 key={"download"}
-                href={`${siteUrl}download`}
+                href={
+                  user &&
+                  (user.role === "P" || user.role == "A") &&
+                  post.blogLinkStatus != "E"
+                    ? `${siteUrl}#how-to-dl`
+                    : `${siteUrl}download`
+                }
               >
                 How to download video
               </Link>
             </p>
           )}
-          {decisionLists.includes("9") && post.blogLinkStatus != "E" && (
+          {user &&
+          (user.role === "P" || user.role == "A") &&
+          post.blogLinkStatus != "E" ? (
+            <div className="text-center">
+              {post.downloads.length > 0 &&
+                post.downloads.map((download) => (
+                  <div className="inline-block sm:m-2" key={download.id}>
+                    <span
+                      onClick={
+                        // () => getMeDownloadLinkAndRedirect(download.id)
+                        () => handleDownloadBySlug(false)
+                        // () => window.open(download.short_link)
+                      }
+                      className="hover:shadow-xl hover:scale-95 hover:bg-indigo-700 m-1 sm:my-2 transition duration-150 text-xs sm:text-base font-bold inline-block bg-pink-600 rounded-full text-white px-4 py-2 sm:px-8 sm:py-3 cursor-pointer"
+                    >
+                      {download.title}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          ) : (
             <div className="text-center">
               {post.downloads.length > 0 &&
                 post.downloads.map((download) => (
@@ -203,53 +214,6 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug }) => {
             </div>
           )}
 
-          {decisionLists.length !== 0 && !decisionLists.includes("9") && post.blogLinkStatus != "E" && (
-            <div className="mt-8 text-center">
-              {showDownload ? (
-                <>
-                  {post.downloads.length > 0 &&
-                    post.downloads.map((download) => (
-                      // this is 9
-                      <div className="inline-block sm:m-2" key={download.id}>
-                        {decisionLists.includes(decisionNo) ? (
-                          <span
-                            onClick={() =>
-                              checkIsNotNoobThenLinkValidate(download.id)
-                            }
-                            className="hover:shadow-xl hover:scale-95 hover:bg-indigo-700 m-1 sm:my-2 transition duration-150 text-xs sm:text-base font-bold inline-block bg-pink-600 rounded-full text-white px-4 py-2 sm:px-8 sm:py-3 cursor-pointer"
-                          >
-                            {download.title}
-                          </span>
-                        ) : (
-                          <span
-                            onClick={() =>
-                              // getMeDownloadLinkAndRedirect(download.id)
-                              handleDownloadBySlug(false)
-                            }
-                            className="hover:shadow-xl hover:scale-95 hover:bg-indigo-700 m-1 sm:my-2 transition duration-150 text-xs sm:text-base font-bold inline-block bg-pink-600 rounded-full text-white px-4 py-2 sm:px-8 sm:py-3 cursor-pointer"
-                          >
-                            {download.title}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                </>
-              ) : (
-                <>
-                  {initialTimerFlag && (
-                    <p className="text-md text-gray-600 dark:text-gray-400 font-normal text-center">
-                      Your download link is getting generated <br /> in{" "}
-                      <Timer
-                        seconds={decisionLists.includes("9") ? 10 : 25}
-                        onFinish={() => onFinish("initial")}
-                      />{" "}
-                      seconds
-                    </p>
-                  )}
-                </>
-              )}
-            </div>
-          )}
           <blockquote
             className={`otroBlockquote ${postStyles.otroBlockquote} mt-6`}
           >

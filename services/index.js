@@ -107,6 +107,13 @@ export const loggedInUserDetails = async () => {
   });
 };
 
+export const membershipDetails = async () => {
+  return await mainAxios({
+    method: "get",
+    url: apiEndpoints.MEMBERSHIP_DETAILS,
+  });
+};
+
 export const submitContactUsForm = async (formData) => {
   return await mainAxios({
     method: "post",
@@ -211,5 +218,22 @@ export const resetPasswordConfirm = async (resetPassObj) => {
     method: "post",
     url: apiEndpoints.RESET_PASS_CONFIRMATION,
     data: resetPassObj,
+  });
+};
+
+export const getAllPlans = async () => {
+  return await mainAxios({
+    method: "get",
+    url: apiEndpoints.GET_ALL_PLANS
+  });
+};
+
+
+// create membership request
+export const createMembershipRequest = async (membershipObj) => {
+  return await mainAxios({
+    method: "post",
+    url: apiEndpoints.CREATE_MEMBERSHIP_REQUEST,
+    data: membershipObj,
   });
 };

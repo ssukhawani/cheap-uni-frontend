@@ -4,7 +4,7 @@ import { Categories, PostCard, PostWidgets } from "../components";
 import { FeaturedPosts } from "../sections";
 import postStyles from "../components/post-styles.module.css";
 import Modal from "react-responsive-modal";
-import { getBlogList, getDecisionList, getDownloadsById } from "../services";
+import { getBlogList, getDecisionList, getDownloadsById, membershipDetails } from "../services";
 import { queryKeys } from "../constants/query-keys";
 import { dehydrate, useQuery } from "react-query";
 import useDebounce from "../utility/useDebounce";
@@ -14,7 +14,12 @@ import { AdsContainer } from "../components/AdsContainer";
 import DigitalOcean from "../components/DigitalOcean";
 import TakenDown from "../components/TakenDown";
 import HowToDownload from "../components/HowToDownload";
-import { getModal, setModal, updateModal } from "../utility/localStorage";
+import {
+  getModal,
+  getStoredUser,
+  setModal,
+  updateModal,
+} from "../utility/localStorage";
 import CrossSell from "../components/CrossSell";
 // import PromoteOnSidebar from "../components/PromoteOnSidebar";
 
@@ -24,6 +29,7 @@ export default function Home() {
   const [pageNumber, setPageNumber] = useState("1");
   const [noob, setNoob] = useState(false);
   const [modalFlag, setModalFlag] = useState(false);
+  const [user, setUser] = useState(null);
 
   const debouncedSearchValue = useDebounce(searchValue, 300);
 
@@ -54,6 +60,18 @@ export default function Home() {
       let isNoob = checkIsNoob();
       setNoob(isNoob);
       // modalHandler(true);
+
+      // get stored user data based on that show premium plans
+      async function fetchData() {
+        const storedUser = getStoredUser();
+        if (!storedUser) {
+        } else {
+          const response = await membershipDetails();
+          const updatedData = response.data;
+          setUser({ ...storedUser, ...updatedData });
+        }
+      }
+      fetchData();
     }
     initialRenderRef.current = false;
   }, []);
@@ -177,7 +195,8 @@ export default function Home() {
         <div className="lg:col-span-4 col-span-1 ">
           <div className="lg:sticky relative top-8">
             {/* <PromoteOnSidebar /> */}
-            {!noob ? <CrossSell /> : <></>}
+            {!user && !noob ? <CrossSell /> : user.role != "P" ? <CrossSell /> : <></>}
+            {/* {!noob && (user.role != "P") ? <CrossSell /> : <></>} */}
             {/* {!noob ? <Contribution /> : <></>} */}
             {!noob ? <HowToDownload /> : <></>}
             <DigitalOcean />
@@ -233,20 +252,23 @@ export default function Home() {
               <div className="relative w-full h-full bg-white shadow rounded-lg">
                 <div className="flex flex-col items-center pt-8 pb-6 px-7 sm:px-14 text-base">
                   <p className="text-2xl font-bold leading-6 text-gray-800 text-center">
-                   Time to say GoodBye 😞
+                    Time to say GoodBye 😞
                   </p>
                   <p className="text-sm text-center mt-4 text-gray-600 leading-6">
                     <span className="text-black font-bold text-sm">
                       Thank you for the tremendous support you've shown
                     </span>
-                    <br/>
+                    <br />
                     <span className="text-[#FF1E00] font-bold text-sm">
-                      This forum will be closed by september month, so you guys can take backup for all the courses...
+                      This forum will be closed by september month, so you guys
+                      can take backup for all the courses...
                     </span>
                   </p>
                 </div>
                 <div className="flex items-center justify-center py-6 bg-gray-100 rounded-bl rounded-br">
-                  <p className="text-center">Fir milenge chalte chalte....🙂 </p>
+                  <p className="text-center">
+                    Fir milenge chalte chalte....🙂{" "}
+                  </p>
                 </div>
                 <div
                   className="cursor-pointer absolute top-0 right-0 m-3 text-gray-800 transition duration-150 ease-in-out"

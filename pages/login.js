@@ -6,7 +6,7 @@ import EyeHide from "../components/icons/EyeHide";
 import EyeShow from "../components/icons/EyeShow";
 import { errors } from "../constants/errors";
 import { toastMsg } from "../constants/toast-messages";
-import { loggedInUserDetails, login } from "../services";
+import { loggedInUserDetails, login, membershipDetails } from "../services";
 import { setStoredUser, updateStoredUser } from "../utility/localStorage";
 import { giveMeErrorFor } from "./signup";
 import Loading from "../assets/images/loading.gif";
@@ -82,15 +82,27 @@ const Login = () => {
             jwt_access: `JWT ${response.data.access}`,
           });
 
-          loggedInUserDetails().then((response) => {
-            updateStoredUser({ ...response.data });
-            toast.success(toastMsg.LOGIN_SUCCESS, {
-              toastId: "login",
+          // Define the API requests
+          const loggedInUserDetailsPromise = loggedInUserDetails();
+          const membershipDetailsPromise = membershipDetails();
+
+          // Use Promise.all() to wait for both promises to resolve
+          Promise.all([loggedInUserDetailsPromise, membershipDetailsPromise])
+            .then(([userDetailsResponse, membershipDetailsResponse]) => {
+              updateStoredUser({ ...userDetailsResponse.data, ...membershipDetailsResponse.data });
+
+              toast.success(toastMsg.LOGIN_SUCCESS, {
+                toastId: "login",
+              });
+
+              router.push({
+                pathname: "/",
+              });
+            })
+            .catch((error) => {
+              // Handle errors
+              console.error("Error:", error);
             });
-            router.push({
-              pathname: "/",
-            });
-          });
         })
         .catch((err) => {
           if (err && err.response) {

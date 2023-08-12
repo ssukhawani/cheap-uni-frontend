@@ -7,3 +7,24 @@ export const requestList = [
   { name: "ZTM" },
   { name: "Rapidgator Premium Links" },
 ];
+
+export const featureList = [
+  { name: "Unlimited downloads" },
+  { name: "No ads" },
+  { name: "Udemy" },
+  { name: "Coursera" },
+  { name: "Pluralsight" },
+  { name: "CWM" },
+  { name: "ZTM" },
+  { name: "Envato Elements" },
+  { name: "Freepik" },
+  { name: "Wordpress themes" },
+  { name: "Wordpress plugins" },
+  { name: "Cool softwares" },
+  { name: "Notes/Tutorials" },
+  { name: "Tips & Tricks" },
+  { name: "Free Accounts" },
+  { name: "Free Cookies" },
+  { name: "Ui/Ux templates" },
+  { name: "Lot of cool stuff" },
+];
