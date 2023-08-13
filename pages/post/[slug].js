@@ -15,7 +15,6 @@ import {
   Author,
   Comments,
   CommentForm,
-  Loader,
 } from "../../components";
 import Smiley from "../../assets/images/smiley.gif";
 import { queryClient } from "../../react-query/queryClient";
@@ -25,7 +24,6 @@ import DigitalOcean from "../../components/DigitalOcean";
 import Image from "next/legacy/image";
 import { checkIsNoob, decode } from "../../utility/functions";
 import TakenDown from "../../components/TakenDown";
-import Contribution from "../../components/Contibution";
 import HowToDownload from "../../components/HowToDownload";
 import CrossSell from "../../components/CrossSell";
 import { getStoredUser } from "../../utility/localStorage";

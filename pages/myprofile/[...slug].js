@@ -8,6 +8,7 @@ import { clearStoredUser, getStoredUser } from "../../utility/localStorage";
 import ResetPassword from "../../components/ResetPassword";
 import UserProfile from "../../components/UserProfile";
 import { membershipDetails } from "../../services";
+import Smiley from "../../assets/images/smiley.gif"
 
 const MyProfile = () => {
   const router = useRouter();
@@ -45,7 +46,11 @@ const MyProfile = () => {
   }, [slug]);
 
   if (!user) {
-    return <div>Loading...</div>; // Render loading state while fetching user data
+    return (
+      <div className="h-screen w-screen grid place-content-center">
+        <Image height={100} width={100} src={Smiley} alt="loading..." />
+      </div>
+    );
   }
 
   const handelLogout = () => {
