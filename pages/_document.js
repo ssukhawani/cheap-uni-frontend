@@ -47,6 +47,21 @@ class AppDocument extends Document {
               }
             })()}
           </script> */}
+          {/* Google Analytics */}
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-85E7CRTVDK"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-85E7CRTVDK');
+              `,
+            }}
+          />
         </Head>
         <body>
           <Main></Main>
