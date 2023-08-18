@@ -58,7 +58,7 @@ const CrossSell = () => {
           <h2 className="text-2xl text-center text-gray-800 pb-3 font-bold">
             Membership Plans
           </h2>
-          <p className="text-sm text-center text-gray-600 pb-5 leading-normal px-10">
+          <p className="text-sm text-center text-gray-800 pb-5 leading-normal px-10">
             We are bringing so many new things at the fraction of a cost....
           </p>
         </div>

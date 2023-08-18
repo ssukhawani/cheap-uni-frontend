@@ -7,6 +7,7 @@ import SupportSuccess from "./SupportSuccess";
 import { AdsContainer } from "./AdsContainer";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import CrossSellHorizontal from "./CrossSellHorizontal";
 
 export const getMeRandomNum = () => Math.floor(Math.random() * 4);
 
@@ -293,7 +294,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
             This Link is expired comment if needed will add it..
           </p>
         )}
-
+        <CrossSellHorizontal/>
         <div>
           <AdsContainer
             client={"ca-pub-2093009960356176"}
