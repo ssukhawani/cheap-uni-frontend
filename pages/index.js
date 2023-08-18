@@ -4,7 +4,12 @@ import { Categories, PostCard, PostWidgets } from "../components";
 import { FeaturedPosts } from "../sections";
 import postStyles from "../components/post-styles.module.css";
 import Modal from "react-responsive-modal";
-import { getBlogList, getDecisionList, getDownloadsById, membershipDetails } from "../services";
+import {
+  getBlogList,
+  getDecisionList,
+  getDownloadsById,
+  membershipDetails,
+} from "../services";
 import { queryKeys } from "../constants/query-keys";
 import { dehydrate, useQuery } from "react-query";
 import useDebounce from "../utility/useDebounce";
@@ -21,6 +26,7 @@ import {
   updateModal,
 } from "../utility/localStorage";
 import CrossSell from "../components/CrossSell";
+import TelegramCard from "../components/Telegram";
 // import PromoteOnSidebar from "../components/PromoteOnSidebar";
 
 export default function Home() {
@@ -195,9 +201,16 @@ export default function Home() {
         <div className="lg:col-span-4 col-span-1 ">
           <div className="lg:sticky relative top-8">
             {/* <PromoteOnSidebar /> */}
-            {!user && !noob ? <CrossSell /> : user.role != "P" ? <CrossSell /> : <></>}
+            {!user && !noob ? (
+              <CrossSell />
+            ) : user.role != "P" ? (
+              <CrossSell />
+            ) : (
+              <></>
+            )}
             {/* {!noob && (user.role != "P") ? <CrossSell /> : <></>} */}
             {/* {!noob ? <Contribution /> : <></>} */}
+            <TelegramCard />
             {!noob ? <HowToDownload /> : <></>}
             <DigitalOcean />
             <div className="rounded-lg my-4">
