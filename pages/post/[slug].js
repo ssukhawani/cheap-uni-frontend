@@ -64,7 +64,8 @@ export function handleDownload(links, isTD) {
     `${
       decode(links[0].url).includes("https://decrypt.hashhackers.com") ||
       decode(links[0].url).includes("https://api.cheapuniverse.org") ||
-      decode(links[0].url).includes("https://share.tutflix.org")
+      decode(links[0].url).includes("https://share.tutflix.org") ||
+      decode(links[0].url).includes("https://api.freecourseuniverse.com")
         ? content4 +
           content3 +
           '<br /><img src="https://i.imgur.com/ZgTZnTD.png" alt="Image" />'+ video 
