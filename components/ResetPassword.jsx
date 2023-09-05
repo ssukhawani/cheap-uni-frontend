@@ -34,8 +34,8 @@ const ResetPassword = ({ title, resetObj, setResetObj }) => {
   };
 
   return (
-    <>
-      <div className="bg-gray-100 rounded-lg shadow-md p-6">
+    <div className="px-6 xl:px-20 md:px-10 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center ">
+      <div className="mt-10 bg-white shadow-lg md:w-1/2 w-full lg:px-10 px-6 sm:py-10 py-6 rounded-tl-3xl rounded-br-3xl">
         <h1 className="text-2xl font-semibold mb-4">{title}</h1>
 
         <div className="flex flex-col">
@@ -50,7 +50,7 @@ const ResetPassword = ({ title, resetObj, setResetObj }) => {
             id="email"
             aria-labelledby="email"
             type="email"
-            className={`bg-gray-200 border rounded text-sm font-medium leading-none placeholder-gray-800 text-gray-800 py-3 md:w-[40%] pl-3 mt-2`}
+            className={`bg-gray-200 border rounded text-sm font-medium leading-none placeholder-gray-800 text-gray-800 py-3 pl-3 mt-2`}
             placeholder="e.g: johndoe@gmail.com"
             value={resetObj?.email}
             onChange={handelChange("email")}
@@ -62,7 +62,7 @@ const ResetPassword = ({ title, resetObj, setResetObj }) => {
         <div className="mt-8">
           <button
             role="button"
-            className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-4 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 md:w-[40%] ${
+            className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-4 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
               !isLoading && "py-4"
             }`}
             onClick={handelSendResetPassLink}
@@ -75,7 +75,7 @@ const ResetPassword = ({ title, resetObj, setResetObj }) => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -28,3 +28,5 @@ export const featureList = [
   { name: "Ui/Ux templates" },
   { name: "Lot of cool stuff" },
 ];
+
+export const excludeFooter = ['/login','/signup','/forgot-password']
