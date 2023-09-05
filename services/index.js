@@ -229,11 +229,11 @@ export const getAllPlans = async () => {
 };
 
 
-// create membership request
-export const createMembershipRequest = async (membershipObj) => {
+// create new order request
+export const createMOrderRequest = async (membershipObj) => {
   return await mainAxios({
     method: "post",
-    url: apiEndpoints.CREATE_MEMBERSHIP_REQUEST,
+    url: apiEndpoints.CREATE_M_ORDER_REQUEST,
     data: membershipObj,
   });
 };

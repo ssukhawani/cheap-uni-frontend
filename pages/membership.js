@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { createMembershipRequest, getAllPlans } from "../services";
+import {
+  createMOrderRequest,
+  getAllPlans,
+} from "../services";
 import Image from "next/image";
 import Loading from "../assets/images/loading.gif";
 import { toast } from "react-toastify";
@@ -10,8 +13,26 @@ const CrossSell = () => {
   const router = useRouter();
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  useEffect(() => {
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  });
 
   useEffect(() => {
     async function fetchPlans() {
@@ -20,9 +41,9 @@ const CrossSell = () => {
         setPlans(response.data);
         const user = getStoredUser();
         if (!user) {
-          setEmail(null);
+          setUser(null);
         } else {
-          setEmail(user.email);
+          setUser(user);
         }
       } catch (error) {
         console.error("Error fetching plans:", error);
@@ -45,19 +66,56 @@ const CrossSell = () => {
 
     setIsLoading(true);
 
-    createMembershipRequest({
+    createMOrderRequest({
       plan: selectedPlan.id,
       is_approved: false,
     })
-      .then(() => {
-        toast.info("Check your email for the payment link.", {
-          toastId: "payment-link",
-        });
+      .then((res) => {
+        res = res.data;
+        // console.log("Success ===>>", res);
+        //_________ call razorpay gateway ________
+        var options = {
+          key: res["razorpay_key"],
+          amount: res["order"]["amount"],
+          currency: res["order"]["currency"],
+          prefill: {
+            name: user.username,
+            email: user.email,
+            contact: "",
+          },
+          name: "CheapUniverse",
+          description: res["product_name"],
+          image: "https://media.graphassets.com/output=format:jpg/resize=height:200,fit:max/BsWlsxG8TqeneYfkVP2U",
+          order_id: res["order"]["id"],
+          handler: function (response) {
+            // Handle a successful payment here
+            // Redirect to the success page
+            router.push("/success");
+          },
+          modal: {
+            ondismiss: function () {
+              // Handle payment cancellation here
+              toast.error("Payment Cancelled", {
+                toastId: "payment-cancel",
+              });
+            },
+          },
+        };
+
+        var rzp1 = new window.Razorpay(options);
+        rzp1.open();
       })
-      .catch(() => {
-        toast.error("Error creating payment link. We'll fix this asap.", {
-          toastId: "error-payment-link",
-        });
+      .catch((err) => {
+        console.log(err);
+        if (err.response && err.response.data && err.response.data.detail) {
+          toast.error(err.response.data.detail, {
+            toastId: "error-payment-link",
+          });
+        } else {
+          toast.error("Error creating payment link. We'll fix this asap.", {
+            toastId: "error-payment-link",
+          });
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -109,7 +167,7 @@ const CrossSell = () => {
             Email:
             <input
               type="email"
-              value={email}
+              value={user ? user.email : ""}
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:border-indigo-500"
               disabled
               placeholder="Sign in to get membership"
