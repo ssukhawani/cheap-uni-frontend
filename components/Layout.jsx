@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
 
   return (
     <div
-      className="flex flex-col justify-between !h-screen"
+      className={`flex flex-col justify-between`}
     >
       <Header />
       {children}

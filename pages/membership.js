@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   createMOrderRequest,
+  createPaypalOrderRequest,
   getAllPlans,
 } from "../services";
 import Image from "next/image";
@@ -14,7 +15,8 @@ const CrossSell = () => {
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [user, setUser] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingRazorpay, setIsLoadingRazorpay] = useState(false); // Loading state for Razorpay
+  const [isLoadingPayPal, setIsLoadingPayPal] = useState(false); // Loading state for PayPal
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -56,15 +58,52 @@ const CrossSell = () => {
     setSelectedPlan(plan);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handlePayPalPayment = () => {
     if (!selectedPlan) {
       toast.error("Select a membership plan first");
       return;
     }
 
-    setIsLoading(true);
+    setIsLoadingPayPal(true);
+
+    createPaypalOrderRequest({
+      plan: selectedPlan.id,
+      is_approved: false,
+    })
+      .then((response) => {
+        // Handle the response data (e.g., redirect to the PayPal payment page)
+        const { paypal_order_id, paypal_link_for_payment } = response.data;
+        console.log("PayPal Order ID:", paypal_order_id);
+        // console.log("PayPal Payment Link:", paypal_link_for_payment);
+
+        // Redirect the user to the PayPal payment page
+        window.location.href = paypal_link_for_payment;
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response && err.response.data && err.response.data.detail) {
+          toast.error(err.response.data.detail, {
+            toastId: "error-payment-link",
+          });
+        } else {
+          toast.error("Error creating payment link. We'll fix this asap.", {
+            toastId: "error-payment-link",
+          });
+          console.error("Error creating PayPal order:", error);
+        }
+      })
+      .finally(() => {
+        setIsLoadingPayPal(false);
+      });
+  };
+
+  const handleRazorpayPayment = () => {
+    if (!selectedPlan) {
+      toast.error("Select a membership plan first");
+      return;
+    }
+
+    setIsLoadingRazorpay(true);
 
     createMOrderRequest({
       plan: selectedPlan.id,
@@ -85,7 +124,8 @@ const CrossSell = () => {
           },
           name: "CheapUniverse",
           description: res["product_name"],
-          image: "https://media.graphassets.com/output=format:jpg/resize=height:200,fit:max/BsWlsxG8TqeneYfkVP2U",
+          image:
+            "https://media.graphassets.com/output=format:jpg/resize=height:200,fit:max/BsWlsxG8TqeneYfkVP2U",
           order_id: res["order"]["id"],
           handler: function (response) {
             // Handle a successful payment here
@@ -118,12 +158,12 @@ const CrossSell = () => {
         }
       })
       .finally(() => {
-        setIsLoading(false);
+        setIsLoadingRazorpay(false);
       });
   };
 
   return (
-    <div className="px-6 xl:px-20 md:px-10 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center ">
+    <div className="px-6 xl:px-20 md:px-10 md:py-12 py-9 mt-8 2xl:mx-auto 2xl:container md:flex items-center justify-center ">
       <div className="mt-10 bg-white shadow-lg md:w-1/2 w-full lg:px-10 px-6 sm:py-10 py-6 rounded-tl-3xl rounded-br-3xl">
         <h2 className="text-2xl font-bold">Choose a Membership Plan</h2>
         <div className="flex flex-col space-y-2 my-6">
@@ -137,7 +177,7 @@ const CrossSell = () => {
               }`}
               onClick={() => handlePlanSelection(plan)}
             >
-              <p>{plan.name}</p>
+              <li>{plan.name}</li>
               {selectedPlan === plan && (
                 <div className="h-6 w-6 relative z-1">
                   <Image
@@ -162,7 +202,7 @@ const CrossSell = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-4">
           <label className="block">
             Email:
             <input
@@ -173,21 +213,56 @@ const CrossSell = () => {
               placeholder="Sign in to get membership"
             />
           </label>
-          <div className="mt-8">
-            <button
-              type="submit"
-              className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-4 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 md:w-[60%] ${
-                !isLoading && "py-4"
-              }`}
-            >
-              {isLoading ? (
-                <Image height={42} width={40} src={Loading} alt="loading..." />
-              ) : (
-                "Get payment link"
-              )}
-            </button>
+          <div className="mb-4">
+            <div className="flex flex-col md:flex-row">
+              <div className="mb-4 md:mr-4">
+                <button
+                  onClick={handleRazorpayPayment}
+                  className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${
+                    isLoadingRazorpay ? "py-1" : "py-4"
+                  } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
+                    isLoadingRazorpay && "opacity-50 cursor-not-allowed"
+                  }`}
+                  disabled={isLoadingPayPal}
+                >
+                  {isLoadingRazorpay ? (
+                    <Image
+                      height={42}
+                      width={40}
+                      src={Loading}
+                      alt="loading..."
+                    />
+                  ) : (
+                    "Pay with Razorpay"
+                  )}
+                </button>
+              </div>
+
+              <div className="mb-4">
+                <button
+                  onClick={handlePayPalPayment}
+                  className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6  ${
+                    isLoadingPayPal ? "py-1" : "py-4"
+                  } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-800 ${
+                    isLoadingPayPal && "opacity-50 cursor-not-allowed"
+                  }`}
+                  disabled={isLoadingRazorpay}
+                >
+                  {isLoadingPayPal ? (
+                    <Image
+                      height={42}
+                      width={40}
+                      src={Loading}
+                      alt="loading..."
+                    />
+                  ) : (
+                    "Pay with PayPal"
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

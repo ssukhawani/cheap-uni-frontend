@@ -237,3 +237,13 @@ export const createMOrderRequest = async (membershipObj) => {
     data: membershipObj,
   });
 };
+
+
+// create new paypal order request
+export const createPaypalOrderRequest = async (membershipObj) => {
+  return await mainAxios({
+    method: "post",
+    url: apiEndpoints.CREATE_PAYPAL_ORDER_REQUEST,
+    data: membershipObj,
+  });
+};

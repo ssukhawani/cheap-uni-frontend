@@ -29,5 +29,6 @@ export const apiEndpoints = {
   RESET_PASS: "auth/users/reset_password/",
   RESET_PASS_CONFIRMATION: "auth/users/reset_password_confirm/",
   GET_ALL_PLANS: "api/plans/",
-  CREATE_M_ORDER_REQUEST:"api/new-order/"
+  CREATE_M_ORDER_REQUEST:"api/new-order/",
+  CREATE_PAYPAL_ORDER_REQUEST:"api/paypal-new-order/"
 };
