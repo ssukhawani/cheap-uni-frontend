@@ -19,7 +19,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
   const [initialTimerFlag, setInitialTimerFlag] = useState(false);
   const [decisionNo, setDecisionNo] = useState("");
   const initialRenderRef = useRef(true);
-
+  
 
   useEffect(() => {
     if (initialRenderRef.current) {
@@ -146,6 +146,8 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
                     You are Pro Member Download whatever you want...😀
                   </h3>
                 </div>
+              ) : post.blogLinkStatus == "E" ? (
+                <></>
               ) : (
                 <div className="text-center">
                   <h3 className="mb-2 text-lg md:text-xl font-semibold text-center">
@@ -195,6 +197,8 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
                   </div>
                 ))}
             </div>
+          ) : post.blogLinkStatus == "E" ? (
+            <></>
           ) : (
             <div className="text-center">
               {post.downloads.length > 0 &&
@@ -294,7 +298,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
             This Link is expired comment if needed will add it..
           </p>
         )}
-        <CrossSellHorizontal/>
+        <CrossSellHorizontal />
         <div>
           <AdsContainer
             client={"ca-pub-2093009960356176"}
