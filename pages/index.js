@@ -27,10 +27,12 @@ import {
 } from "../utility/localStorage";
 import CrossSell from "../components/CrossSell";
 import TelegramCard from "../components/Telegram";
+import { useRouter } from "next/router";
 // import PromoteOnSidebar from "../components/PromoteOnSidebar";
 
 export default function Home() {
   const initialRenderRef = useRef(true);
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
   const [pageNumber, setPageNumber] = useState("1");
   const [noob, setNoob] = useState(false);
@@ -101,6 +103,18 @@ export default function Home() {
     // if modal is closed without being selected then close isOpen false
     updateModal(false, false);
     setModalFlag(false);
+  };
+
+  const onModalSubmit = (key) => {
+    // if modal is submitted the make isCompleted to True and isOpen to false
+    updateModal(true, false);
+    setModalFlag(false);
+    if (key == "NO") {
+      // router.push("https://api.freecourseuniverse.com/shortlink/redirect/no");
+    } else {
+      // router.push("https://api.freecourseuniverse.com/shortlink/redirect/yes");
+      router.push("https://www.cheapuniverse.org/membership");
+    }
   };
 
   return (
@@ -246,8 +260,7 @@ export default function Home() {
             modalAnimationOut: "customLeaveModalAnimation",
           }}
           animationDuration={500}
-          // open={modalFlag}
-          open={false}
+          open={modalFlag}
           onClose={onModalClose}
           showCloseIcon={false}
           styles={{
@@ -265,23 +278,37 @@ export default function Home() {
               <div className="relative w-full h-full bg-white shadow rounded-lg">
                 <div className="flex flex-col items-center pt-8 pb-6 px-7 sm:px-14 text-base">
                   <p className="text-2xl font-bold leading-6 text-gray-800 text-center">
-                    Time to say GoodBye 😞
+                    Shareus links are dead !
                   </p>
                   <p className="text-sm text-center mt-4 text-gray-600 leading-6">
                     <span className="text-black font-bold text-sm">
-                      Thank you for the tremendous support you've shown
+                      Unfortunately shareus servers are down..
                     </span>
                     <br />
                     <span className="text-[#FF1E00] font-bold text-sm">
-                      This forum will be closed by september month, so you guys
-                      can take backup for all the courses...
+                      Only user with premium membership can access the direct
+                      download links until shareus servers will back..
                     </span>
                   </p>
                 </div>
-                <div className="flex items-center justify-center py-6 bg-gray-100 rounded-bl rounded-br">
-                  <p className="text-center">
+                <div className="flex flex-col items-center justify-center py-6 bg-gray-100 rounded-bl rounded-br">
+                  {/* <p className="text-center">
                     Fir milenge chalte chalte....🙂{" "}
-                  </p>
+                  </p> */}
+                  <div>
+                    {/* <button
+                      onClick={() => onModalSubmit("NO")}
+                      className=" text-xs sm:text-sm font-bold leading-4 text-indigo-700 focus:outline-none px-3 sm:px-5 py-3 bg-indigo-100 hover:bg-indigo-200 dark:hover:bg-indigo-100 dark:bg-indigo-200 border rounded"
+                    >
+                      Don't want to contribute 😓
+                    </button> */}
+                    <button
+                      onClick={() => onModalSubmit("YES")}
+                      className=" text-xs sm:text-sm font-bold leading-4 text-gray-100 px-3 sm:px-5 py-3 bg-indigo-700 dark:bg-indigo-600 hover:bg-opacity-80 ml-3 focus:outline-none rounded"
+                    >
+                      Get Membership (Cheapuniverse.org) 😇
+                    </button>
+                  </div>
                 </div>
                 <div
                   className="cursor-pointer absolute top-0 right-0 m-3 text-gray-800 transition duration-150 ease-in-out"
