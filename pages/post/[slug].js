@@ -27,7 +27,7 @@ import TakenDown from "../../components/TakenDown";
 import HowToDownload from "../../components/HowToDownload";
 import CrossSell from "../../components/CrossSell";
 import { getStoredUser } from "../../utility/localStorage";
-import TelegramCard from "../../components/Telegram";
+// import TelegramCard from "../../components/Telegram";
 
 export function handleDownload(links, isTD) {
   const content = `<html><body><h1>${
@@ -127,7 +127,7 @@ const PostDetails = () => {
           const isNoob = checkIsNoob();
           if (dmcaList.includes(slug) && list.includes("8") && !isNoob) {
             // Your code to execute for regular users goes here
-            handleDownloadBySlug(true);
+            // handleDownloadBySlug(true);
           }
           setDecisionLists(list);
         } else {
@@ -176,7 +176,7 @@ const PostDetails = () => {
               <div className="relative lg:sticky top-8">
                 {/* <Contribution /> */}
                 {!user ? <CrossSell /> : user.role != "P" ? <CrossSell /> : <></>}
-                <TelegramCard/>
+                {/* <TelegramCard/> */}
                 <HowToDownload />
                 <DigitalOcean />
                 <div className="rounded-lg my-4">

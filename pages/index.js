@@ -26,7 +26,7 @@ import {
   updateModal,
 } from "../utility/localStorage";
 import CrossSell from "../components/CrossSell";
-import TelegramCard from "../components/Telegram";
+// import TelegramCard from "../components/Telegram";
 import { useRouter } from "next/router";
 // import PromoteOnSidebar from "../components/PromoteOnSidebar";
 
@@ -224,7 +224,7 @@ export default function Home() {
             )}
             {/* {!noob && (user.role != "P") ? <CrossSell /> : <></>} */}
             {/* {!noob ? <Contribution /> : <></>} */}
-            <TelegramCard />
+            {/* <TelegramCard /> */}
             {!noob ? <HowToDownload /> : <></>}
             <DigitalOcean />
             <div className="rounded-lg my-4">
