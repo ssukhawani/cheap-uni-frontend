@@ -134,15 +134,11 @@ const PostDetails = () => {
           setDecisionLists([]);
         }
       });
-      if (dmcaList.includes(slug)) {
-        router.push({
-          pathname: "/membership",
-        });
-      }else{
-        router.push({
-          pathname: "/404",
-        });
-      }
+      // if (dmcaList.includes(slug)) {
+      //   router.push({
+      //     pathname: "/",
+      //   });
+      // }
     });
   }, []);
 
