@@ -136,7 +136,11 @@ const PostDetails = () => {
       });
       if (dmcaList.includes(slug)) {
         router.push({
-          pathname: "/",
+          pathname: "/membership",
+        });
+      }else{
+        router.push({
+          pathname: "/404",
         });
       }
     });

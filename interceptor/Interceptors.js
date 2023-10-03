@@ -33,7 +33,7 @@ const onResponseError = (error, router) => {
     toast.error("Sorry dude, Content Not Found", {
       toastId: "notFound",
     });
-    router.push("/404");
+    // router.push("/404");
   }
   return Promise.reject(error);
 };

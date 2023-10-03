@@ -8,7 +8,8 @@ import { clearStoredUser, getStoredUser } from "../../utility/localStorage";
 import ResetPassword from "../../components/ResetPassword";
 import UserProfile from "../../components/UserProfile";
 import { membershipDetails } from "../../services";
-import Smiley from "../../assets/images/smiley.gif"
+import Smiley from "../../assets/images/smiley.gif";
+import TakenDown from "../../components/TakenDown";
 
 const MyProfile = () => {
   const router = useRouter();
@@ -159,6 +160,28 @@ const MyProfile = () => {
                 <p className="text-base leading-4  ">Reset Password</p>
               </button>
               <button
+                onClick={() => router.push("/myprofile/dmca-takendown")}
+                className={`focus:outline-none flex jusitfy-start hover:border-indigo-700 border border-transparent focus:border-indigo-700 focus:text-indigo-700 hover:text-indigo-700 text-gray-800 rounded py-3 pl-4 items-center space-x-6 w-full `}
+              >
+                <svg
+                  className="fill-stroke"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 10L11 14L17 20L21 4L3 11L7 13L9 19L12 15"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <p className="text-base leading-4 ">DMCA TakenDown Courses</p>
+              </button>
+              <button
                 onClick={handelLogout}
                 className={`focus:outline-none flex jusitfy-start hover:border-indigo-700 border border-transparent focus:border-indigo-700 focus:text-indigo-700 hover:text-indigo-700 text-gray-800 rounded py-3 pl-4 items-center space-x-6 w-full `}
               >
@@ -187,6 +210,19 @@ const MyProfile = () => {
               <div className="relative overflow-hidden mb-2 md:mb-6 mx-6">
                 <UserProfile user={user} />
               </div>
+            ) : slug == "dmca-takendown" ? (
+              user && (
+                <div className="relative overflow-hidden mb-2 md:mb-6 mx-6">
+                  <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+                    <h1 className="text-base md:text-2xl font-semibold mb-8">
+                      Taken Down Courses {!(user.role == "P" || user.role == "A") && "For Premium Users Only"} ( We got you covered 🥷🏻)
+                    </h1>
+                    <TakenDown
+                      isPremiumUser={user.role == "P" || user.role == "A"}
+                    />
+                  </div>
+                </div>
+              )
             ) : slug == "reset-password" ? (
               resetObj.email && (
                 <div className="relative overflow-hidden mb-2 md:mb-6 mx-6">
