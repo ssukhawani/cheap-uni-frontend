@@ -260,7 +260,8 @@ export default function Home() {
             modalAnimationOut: "customLeaveModalAnimation",
           }}
           animationDuration={500}
-          open={modalFlag}
+          // open={modalFlag}
+          open={false}
           onClose={onModalClose}
           showCloseIcon={false}
           styles={{

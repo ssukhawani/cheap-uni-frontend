@@ -3,6 +3,7 @@ import {
   createMOrderRequest,
   createPaypalOrderRequest,
   getAllPlans,
+  getDecisionList,
 } from "../services";
 import Image from "next/image";
 import Loading from "../assets/images/loading.gif";
@@ -17,6 +18,7 @@ const CrossSell = () => {
   const [user, setUser] = useState("");
   const [isLoadingRazorpay, setIsLoadingRazorpay] = useState(false); // Loading state for Razorpay
   const [isLoadingPayPal, setIsLoadingPayPal] = useState(false); // Loading state for PayPal
+  const [decisionLists, setDecisionLists] = useState([]);
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -35,6 +37,15 @@ const CrossSell = () => {
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   });
+
+  useEffect(() => {
+    getDecisionList().then((res) => {
+      if (res.length) {
+        const list = res.map((data) => String(data.number));
+        setDecisionLists(list);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     async function fetchPlans() {
@@ -198,7 +209,7 @@ const CrossSell = () => {
               Selected Plan: {selectedPlan.name} ({" "}
               {selectedPlan.duration_months} Months )
             </h3>
-            <p>Price: ₹{selectedPlan.price}</p>
+            <p>Price: ${selectedPlan.price_in_dollar}</p>
           </div>
         )}
 
@@ -215,28 +226,30 @@ const CrossSell = () => {
           </label>
           <div className="mb-4">
             <div className="flex flex-col md:flex-row">
-              <div className="mb-4 md:mr-4">
-                <button
-                  onClick={handleRazorpayPayment}
-                  className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${
-                    isLoadingRazorpay ? "py-1" : "py-4"
-                  } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
-                    isLoadingRazorpay && "opacity-50 cursor-not-allowed"
-                  }`}
-                  disabled={isLoadingPayPal}
-                >
-                  {isLoadingRazorpay ? (
-                    <Image
-                      height={42}
-                      width={40}
-                      src={Loading}
-                      alt="loading..."
-                    />
-                  ) : (
-                    "Pay with Razorpay"
-                  )}
-                </button>
-              </div>
+              {decisionLists.length > 0 && decisionLists.includes("9") && (
+                <div className="mb-4 md:mr-4">
+                  <button
+                    onClick={handleRazorpayPayment}
+                    className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${
+                      isLoadingRazorpay ? "py-1" : "py-4"
+                    } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
+                      isLoadingRazorpay && "opacity-50 cursor-not-allowed"
+                    }`}
+                    disabled={isLoadingPayPal}
+                  >
+                    {isLoadingRazorpay ? (
+                      <Image
+                        height={42}
+                        width={40}
+                        src={Loading}
+                        alt="loading..."
+                      />
+                    ) : (
+                      "Pay with Razorpay"
+                    )}
+                  </button>
+                </div>
+              )}
 
               <div className="mb-4">
                 <button
@@ -261,6 +274,11 @@ const CrossSell = () => {
                 </button>
               </div>
             </div>
+            {decisionLists.length > 0 && !decisionLists.includes("9") && (
+              <p className="text-[#FF1E00] font-bold text-sm block">
+                Membership has been closed for indian users...
+              </p>
+            )}
           </div>
         </div>
       </div>

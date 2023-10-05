@@ -208,8 +208,8 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
                       onClick={
                         // () => getMeDownloadLinkAndRedirect(download.id)
                         // handleDownloadBySlug(false)
-                        // () => window.open(download.short_link)
-                        ()=>window.open("https://www.cheapuniverse.org/membership")
+                        () => window.open(download.short_link)
+                        // ()=>window.open("https://www.cheapuniverse.org/membership")
                       }
                       className="hover:shadow-xl hover:scale-95 hover:bg-indigo-700 m-1 sm:my-2 transition duration-150 text-xs sm:text-base font-bold inline-block bg-pink-600 rounded-full text-white px-4 py-2 sm:px-8 sm:py-3 cursor-pointer"
                     >
