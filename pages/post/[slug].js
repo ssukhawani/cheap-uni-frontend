@@ -37,15 +37,14 @@ export function handleDownload(links, isTD) {
   } 🤠</h1>`;
   const content3 =
     "<h3>If links are not working ping us in comment section</h3>";
-  const content2 = "<h2>Password: tutflix or XDJ or FreeCourseUniverse or CheapUniverse</h2>";
+  const content2 = "<h2>Password: FreeCourseUniverse or CheapUniverse</h2>";
   const content5 =
     "<h2>Follow the below steps carefully, otherwise u wont be able to get</h3> <br/> <h2>These are the download Links 👇<h2/>";
   const content4 =
     "<h3>Step 1: Visit this link select your account & Authorize, <br/> Step 2: close the tab (keep open the same browser) & again open same link </br> Step 3: Now Select your logged in account <br/> Step 4: Copy, U will get it on ur drive <br/> <br/> If u get any decryption server error click on load button multiple times and try refreshing page </h3>";
 
-  const video = (
-    "<h3>If still not clear follow each step from the video without using ur brain...</h3> <br/> <video src='https://media.graphassets.com/cBVZvHpSTquSt4Ik6sw5' controls></video>"
-  );
+  const video =
+    "<h3>If still not clear follow each step from the video without using ur brain...</h3> <br/> <video src='https://media.graphassets.com/cBVZvHpSTquSt4Ik6sw5' controls></video>";
 
   const data =
     content +
@@ -68,7 +67,8 @@ export function handleDownload(links, isTD) {
       decode(links[0].url).includes("https://api.freecourseuniverse.com")
         ? content4 +
           content3 +
-          '<br /><img src="https://i.imgur.com/ZgTZnTD.png" alt="Image" />'+ video 
+          '<br /><img src="https://i.imgur.com/ZgTZnTD.png" alt="Image" />' +
+          video
         : ""
     }` +
     "</body></html>";
@@ -88,7 +88,6 @@ const PostDetails = () => {
   const [decisionLists, setDecisionLists] = useState([]);
   const [user, setUser] = useState(null);
 
-
   const { data: post, isLoading } = useQuery(
     [queryKeys.BLOG_DETAILS, slug],
     () => fetchBlogDetails(slug),
@@ -99,7 +98,6 @@ const PostDetails = () => {
       // so it will fetch update data in background
     }
   );
-
 
   useMemo(() => {
     async function fetchData() {
@@ -175,7 +173,13 @@ const PostDetails = () => {
             <div className="col-span-1 lg:col-span-4">
               <div className="relative lg:sticky top-8">
                 {/* <Contribution /> */}
-                {!user ? <CrossSell /> : user.role != "P" ? <CrossSell /> : <></>}
+                {!user ? (
+                  <CrossSell />
+                ) : user.role != "P" ? (
+                  <CrossSell />
+                ) : (
+                  <></>
+                )}
                 {/* <TelegramCard/> */}
                 <HowToDownload />
                 <DigitalOcean />

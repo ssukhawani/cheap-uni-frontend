@@ -19,7 +19,6 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
   const [initialTimerFlag, setInitialTimerFlag] = useState(false);
   const [decisionNo, setDecisionNo] = useState("");
   const initialRenderRef = useRef(true);
-  
 
   useEffect(() => {
     if (initialRenderRef.current) {
@@ -223,8 +222,8 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
           <blockquote
             className={`otroBlockquote ${postStyles.otroBlockquote} mt-6`}
           >
-            Zip/rar files password can be one of these :- tutflix / XDJ /
-            FreeCourseUniverse / CheapUniverse
+            Zip/rar files password can be one of these :- FreeCourseUniverse /
+            CheapUniverse
           </blockquote>
           <AdsContainer
             client={"ca-pub-2093009960356176"}
