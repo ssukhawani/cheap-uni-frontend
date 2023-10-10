@@ -20,11 +20,7 @@ export const featureList = [
   { name: "Freepik" },
   { name: "Wordpress themes" },
   { name: "Wordpress plugins" },
-  { name: "Cool softwares" },
-  { name: "Notes/Tutorials" },
-  { name: "Tips & Tricks" },
-  { name: "Free Accounts" },
-  { name: "Free Cookies" },
+  { name: "Ebooks" },
   { name: "Ui/Ux templates" },
   { name: "Lot of cool stuff" },
 ];
