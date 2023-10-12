@@ -87,7 +87,7 @@ const CrossSell = () => {
                 <div className="flex justify-between pl-12 pr-12 pt-4 pb-4 bg-gray-100">
                   <p className="text-base text-indigo-700 font-bold">
                     {plan.duration_months} Months Plan:
-                    <span className="text-gray-700">{plan.price_in_dollar} ₹</span>
+                    <span className="text-gray-700">{plan.price} ₹</span>
                   </p>
                 </div>
 
