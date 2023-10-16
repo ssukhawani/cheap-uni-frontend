@@ -1,6 +1,12 @@
 import React from "react";
 
 function MembershipList({ list }) {
+
+  const status = {
+    'Active': 'Active ✅',
+    'Inactive': 'Inactive 🔵',
+    'Expired': 'Expired ❌'
+  }
   return (
     <ul className="md:pl-8">
       {list.map((membership) => (
@@ -32,6 +38,12 @@ function MembershipList({ list }) {
               {membership.end_date}
             </span>
           </p>
+          <p>
+            Status:{" "}
+            <span className="pl-2 text-purple-500 font-semibold">
+              {status[membership.membership_status]}
+            </span>
+          </p>
         </li>
       ))}
     </ul>
@@ -39,11 +51,12 @@ function MembershipList({ list }) {
 }
 
 const UserProfile = ({ user }) => {
-  const activeMemberships =
-    user.memberships.length > 0 && user.memberships[0].membership_status === "Active"
-      ? [user.memberships[0]]
-      : [];
+  const activeMemberships = user.memberships.filter(
+    (membership) => membership.membership_status === "Active" || membership.membership_status === "Inactive"
+  );
 
+
+    
   const expiredMemberships = user.memberships.filter(
     (membership) => membership.membership_status === "Expired"
   );

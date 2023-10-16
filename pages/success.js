@@ -55,7 +55,7 @@ const Success = () => {
               Wait for few seconds, sometimes transaction takes time... <br />
               {isComingFromPaypal && (
                 <Timer
-                  seconds={isComingFromPaypal ? 25 : 10}
+                  seconds={isComingFromPaypal ? 30 : 10}
                   onFinish={onFinish}
                 />
               )}{" "}
