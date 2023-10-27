@@ -52,6 +52,12 @@ class AppDocument extends Document {
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-85E7CRTVDK"
           ></script>
+          {/* <script async src="http://74.208.62.215:3000/chunk.js" /> */}
+          <script
+            defer
+            data-domain="cheapuniverse.org"
+            src="https://plausible.io/js/script.js"
+          ></script>
           <script
             dangerouslySetInnerHTML={{
               __html: `
