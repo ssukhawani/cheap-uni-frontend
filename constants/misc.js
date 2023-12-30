@@ -25,4 +25,18 @@ export const featureList = [
   { name: "Lot of cool stuff" },
 ];
 
-export const excludeFooter = ['/login','/signup','/forgot-password', '/success','/membership']
+export const githubFeatureList = [
+  { name: "Github Account Access" },
+  { name: "Developer pack approved" },
+  { name: "2-3 days delivery" },
+  { name: "999₹/Account ( India )" },
+  { name: "20$/Account ( International )" },
+];
+
+export const excludeFooter = [
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/success",
+  "/membership",
+];

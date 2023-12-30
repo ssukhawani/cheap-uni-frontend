@@ -191,7 +191,6 @@ export const submitCourseRequest = async (courseData) => {
   });
 };
 
-
 // user activation
 export const activateUser = async (activateObj) => {
   return await mainAxios({
@@ -201,7 +200,6 @@ export const activateUser = async (activateObj) => {
   });
 };
 
-
 // user reset pass
 export const resetPassword = async (resetObj) => {
   return await mainAxios({
@@ -210,7 +208,6 @@ export const resetPassword = async (resetObj) => {
     data: resetObj,
   });
 };
-
 
 // user reset pass
 export const resetPasswordConfirm = async (resetPassObj) => {
@@ -224,10 +221,16 @@ export const resetPasswordConfirm = async (resetPassObj) => {
 export const getAllPlans = async () => {
   return await mainAxios({
     method: "get",
-    url: apiEndpoints.GET_ALL_PLANS
+    url: apiEndpoints.GET_ALL_PLANS,
   });
 };
 
+export const getProductPlans = async () => {
+  return await mainAxios({
+    method: "get",
+    url: apiEndpoints.GET_PRODUCT_PLANS,
+  });
+};
 
 // create new order request
 export const createMOrderRequest = async (membershipObj) => {
@@ -238,6 +241,14 @@ export const createMOrderRequest = async (membershipObj) => {
   });
 };
 
+// create new product request
+export const createProductOrderRequest = async (productObj) => {
+  return await mainAxios({
+    method: "post",
+    url: apiEndpoints.CREATE_PRODUCT_ORDER_REQUEST,
+    data: productObj,
+  });
+};
 
 // create new paypal order request
 export const createPaypalOrderRequest = async (membershipObj) => {
