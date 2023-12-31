@@ -25,12 +25,12 @@ export const featureList = [
   { name: "Lot of cool stuff" },
 ];
 
-export const githubFeatureList = [
+export const githubFeatureList = (price, dollar) => [
   { name: "Github Account Access" },
   { name: "Developer pack approved" },
   { name: "2-3 days delivery" },
-  { name: "999₹/Account ( India )" },
-  { name: "20$/Account ( International )" },
+  { name: `${price}₹/Account ( India )` },
+  { name: `${dollar}$/Account ( International )` },
 ];
 
 export const excludeFooter = [

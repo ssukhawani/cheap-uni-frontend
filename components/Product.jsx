@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RotatingBorderComp from "./RotatingBorderComp";
 import Link from "next/link";
 import { githubFeatureList } from "../constants/misc";
 import Image from "next/image";
+import { getProductPlans } from "../services";
 
 const Product = () => {
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
+  useEffect(() => {
+    async function fetchProductPlans() {
+      try {
+        const response = await getProductPlans();
+        if (response.data) {
+          setSelectedPlan(response.data[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+      }
+    }
+    fetchProductPlans();
+  }, []);
+
   return (
     <div>
       <RotatingBorderComp>
@@ -29,24 +46,29 @@ const Product = () => {
                 </p>
               </div>
               <div className="pt-2 px-8 h-max">
-                <ul className=" h-[25vh] overflow-y-auto">
-                  {githubFeatureList.map((feature, featureIndex) => (
-                    <li
-                      key={featureIndex}
-                      className="pl-1 py-2 flex items-start"
-                    >
-                      <div className="h-6 w-6 flex-none relative">
-                        <Image
-                          layout="fill"
-                          alt={"features"}
-                          className="rounded-full bg-green-tag text-center"
-                          src="data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg'><text x='5' y='20' font-size='18px'>&#10004;</text></svg>"
-                        />
-                      </div>
-                      <p className="pl-3 font-semibold">{feature.name}</p>
-                    </li>
-                  ))}
-                </ul>
+                {selectedPlan && (
+                  <ul className=" h-[25vh] overflow-y-auto">
+                    {githubFeatureList(
+                      selectedPlan.price,
+                      selectedPlan.price_in_dollar
+                    ).map((feature, featureIndex) => (
+                      <li
+                        key={featureIndex}
+                        className="pl-1 py-2 flex items-start"
+                      >
+                        <div className="h-6 w-6 flex-none relative">
+                          <Image
+                            layout="fill"
+                            alt={"features"}
+                            className="rounded-full bg-green-tag text-center"
+                            src="data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg'><text x='5' y='20' font-size='18px'>&#10004;</text></svg>"
+                          />
+                        </div>
+                        <p className="pl-3 font-semibold">{feature.name}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
               <div className="flex justify-center pb-8">
                 <div>
