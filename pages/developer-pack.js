@@ -214,7 +214,7 @@ const DeveloperPack = () => {
                 <li className="font-normal text-red-600 mb-2">
                   <span className="font-normal">
                     We will share the New Github Account Credentials on your
-                    Mail that you use here while filling the form.
+                    Mail that you are loggedIn with.
                   </span>
                 </li>
                 <li className="font-normal text-red-600 mb-2">
