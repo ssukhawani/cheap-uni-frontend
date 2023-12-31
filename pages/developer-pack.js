@@ -238,45 +238,47 @@ const DeveloperPack = () => {
             <h3 className="text-2xl font-bold mb-4 px-8">
               <strong>Buy Now</strong>
             </h3>
-            <div className="px-8 flex flex-col gap-3 pb-20 lg:w-[500px]">
-              <div className="flex justify-between items-center">
-                <p> Indian Users - </p>
-                <button
-                  onClick={handleRazorpayPayment}
-                  className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${
-                    isLoadingRazorpay ? "py-1" : "py-4"
-                  } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
-                    isLoadingRazorpay && "opacity-50 cursor-not-allowed"
-                  }`}
-                  disabled={isLoadingRazorpay}
-                >
-                  {isLoadingRazorpay ? (
-                    <Image
-                      height={42}
-                      width={40}
-                      src={Loading}
-                      alt="loading..."
-                    />
-                  ) : (
-                    "999₹/Account"
-                  )}
-                </button>
+            {selectedPlan && (
+              <div className="px-8 flex flex-col gap-3 pb-20 lg:w-[500px]">
+                <div className="flex justify-between items-center">
+                  <p> Indian Users - </p>
+                  <button
+                    onClick={handleRazorpayPayment}
+                    className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${
+                      isLoadingRazorpay ? "py-1" : "py-4"
+                    } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
+                      isLoadingRazorpay && "opacity-50 cursor-not-allowed"
+                    }`}
+                    disabled={isLoadingRazorpay}
+                  >
+                    {isLoadingRazorpay ? (
+                      <Image
+                        height={42}
+                        width={40}
+                        src={Loading}
+                        alt="loading..."
+                      />
+                    ) : (
+                      `${selectedPlan.price}₹/Account`
+                    )}
+                  </button>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p> International Users - </p>
+                  <button
+                    //   onClick={handlePayPalPayment}
+                    className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6  ${
+                      false ? "py-1" : "py-4"
+                    } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-800 ${
+                      false && "opacity-50 cursor-not-allowed"
+                    }`}
+                    disabled={true}
+                  >
+                    Coming soon....
+                  </button>
+                </div>
               </div>
-              <div className="flex justify-between items-center">
-                <p> International Users - </p>
-                <button
-                  //   onClick={handlePayPalPayment}
-                  className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6  ${
-                    false ? "py-1" : "py-4"
-                  } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-800 ${
-                    false && "opacity-50 cursor-not-allowed"
-                  }`}
-                  disabled={true}
-                >
-                  Coming soon....
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
         <div className="col-span-1 lg:col-span-4">
