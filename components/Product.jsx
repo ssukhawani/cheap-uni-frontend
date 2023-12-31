@@ -3,17 +3,22 @@ import RotatingBorderComp from "./RotatingBorderComp";
 import Link from "next/link";
 import { githubFeatureList } from "../constants/misc";
 import Image from "next/image";
-import { getProductPlans } from "../services";
+import { getProductPlans, getProductSell } from "../services";
 
 const Product = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [sell, setSell] = useState([]);
 
   useEffect(() => {
     async function fetchProductPlans() {
       try {
         const response = await getProductPlans();
+        const sells = await getProductSell();
         if (response.data) {
           setSelectedPlan(response.data[0]);
+        }
+        if (sells.data) {
+          setSell(sells.data);
         }
       } catch (error) {
         console.error("Error fetching plans:", error);
@@ -38,8 +43,9 @@ const Product = () => {
             <div className="mx-auto mb-4 max-w-sm shadow rounded-lg border-4 border-indigo-700 bg-gray-300">
               <div className="pt-8 px-8 pb-6">
                 <h2 className="text-xl text-center text-red-600 pb-3 font-bold">
-                  Limited Qty Available : 20 <br></br> ( First come first serve
-                  )
+                  Limited Qty Available :{" "}
+                  {process.env.NEXT_PUBLIC_PRODUCT_STOCK - sell.length}{" "}
+                  <br></br> ( First come first serve )
                 </h2>
                 <p className="text-sm">
                   Others will get refund if all accounts gets sold !

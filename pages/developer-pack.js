@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import DigitalOcean from "../components/DigitalOcean";
 import { AdsContainer } from "../components/AdsContainer";
-import { createProductOrderRequest, getProductPlans } from "../services";
+import {
+  createPaypalProductOrderRequest,
+  createProductOrderRequest,
+  getProductPlans,
+  getProductSell,
+} from "../services";
 import { getStoredUser } from "../utility/localStorage";
 import { toast } from "react-toastify";
 import Image from "next/image";
@@ -12,6 +17,8 @@ const DeveloperPack = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [user, setUser] = useState("");
   const [isLoadingRazorpay, setIsLoadingRazorpay] = useState(false);
+  const [isLoadingPayPal, setIsLoadingPayPal] = useState(false);
+  const [sell, setSell] = useState([]);
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -35,9 +42,13 @@ const DeveloperPack = () => {
     async function fetchProductPlans() {
       try {
         const response = await getProductPlans();
+        const sells = await getProductSell();
         setPlans(response.data);
         if (response.data) {
           setSelectedPlan(response.data[0]);
+        }
+        if (sells.data) {
+          setSell(sells.data);
         }
         const user = getStoredUser();
         if (!user) {
@@ -119,6 +130,45 @@ const DeveloperPack = () => {
       });
   };
 
+  const handlePayPalPayment = () => {
+    if (!selectedPlan) {
+      toast.error("Not a valid Plan");
+      return;
+    }
+
+    setIsLoadingPayPal(true);
+
+    createPaypalProductOrderRequest({
+      plan: selectedPlan.id,
+      is_approved: false,
+    })
+      .then((response) => {
+        // Handle the response data (e.g., redirect to the PayPal payment page)
+        const { paypal_order_id, paypal_link_for_payment } = response.data;
+        console.log("PayPal Order ID:", paypal_order_id);
+        // console.log("PayPal Payment Link:", paypal_link_for_payment);
+
+        // Redirect the user to the PayPal payment page
+        window.location.href = paypal_link_for_payment;
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response && err.response.data && err.response.data.detail) {
+          toast.error(err.response.data.detail, {
+            toastId: "error-payment-link",
+          });
+        } else {
+          toast.error("Error creating payment link. We'll fix this asap.", {
+            toastId: "error-payment-link",
+          });
+          console.error("Error creating PayPal order:", error);
+        }
+      })
+      .finally(() => {
+        setIsLoadingPayPal(false);
+      });
+  };
+
   return (
     <div className="mt-28 container mx-auto px-4 sm:px-10 mb-8">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -133,8 +183,9 @@ const DeveloperPack = () => {
               </h2>
               <div className="pt-8 pb-6 mb-10">
                 <h2 className="text-lg lg:text-xl  text-red-600 pb-3 font-bold">
-                  Limited Qty Available : 20 <br></br> ( First come first serve
-                  )
+                  Limited Qty Available :{" "}
+                  {process.env.NEXT_PUBLIC_PRODUCT_STOCK - sell.length}{" "}
+                  <br></br> ( First come first serve )
                 </h2>
                 <p className="text-sm">
                   Others will get refund if all accounts gets sold !
@@ -266,15 +317,24 @@ const DeveloperPack = () => {
                 <div className="flex justify-between items-center">
                   <p> International Users - </p>
                   <button
-                    //   onClick={handlePayPalPayment}
+                    onClick={handlePayPalPayment}
                     className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6  ${
-                      false ? "py-1" : "py-4"
+                      isLoadingPayPal ? "py-1" : "py-4"
                     } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-800 ${
-                      false && "opacity-50 cursor-not-allowed"
+                      isLoadingPayPal && "opacity-50 cursor-not-allowed"
                     }`}
-                    disabled={true}
+                    disabled={isLoadingRazorpay}
                   >
-                    Coming soon....
+                    {isLoadingPayPal ? (
+                      <Image
+                        height={42}
+                        width={40}
+                        src={Loading}
+                        alt="loading..."
+                      />
+                    ) : (
+                      `${selectedPlan.price_in_dollar}$/Account`
+                    )}
                   </button>
                 </div>
               </div>
