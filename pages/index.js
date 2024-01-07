@@ -28,7 +28,7 @@ import {
 import CrossSell from "../components/CrossSell";
 // import TelegramCard from "../components/Telegram";
 import { useRouter } from "next/router";
-import Product from "../components/Product";
+// import Product from "../components/Product";
 // import PromoteOnSidebar from "../components/PromoteOnSidebar";
 
 export default function Home() {
@@ -216,7 +216,7 @@ export default function Home() {
         <div className="lg:col-span-4 col-span-1 ">
           <div className="lg:sticky relative top-8">
             {/* <PromoteOnSidebar /> */}
-            {!noob ? <Product /> : <></>}
+            {/* {!noob ? <Product /> : <></>} */}
             {!user && !noob ? (
               <CrossSell />
             ) : user.role != "P" ? (

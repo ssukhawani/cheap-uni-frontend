@@ -27,7 +27,7 @@ import TakenDown from "../../components/TakenDown";
 import HowToDownload from "../../components/HowToDownload";
 import CrossSell from "../../components/CrossSell";
 import { getStoredUser } from "../../utility/localStorage";
-import Product from "../../components/Product";
+// import Product from "../../components/Product";
 // import TelegramCard from "../../components/Telegram";
 
 export function handleDownload(links, isTD) {
@@ -173,7 +173,7 @@ const PostDetails = () => {
             </div>
             <div className="col-span-1 lg:col-span-4">
               <div className="relative lg:sticky top-8">
-                <Product />
+                {/* <Product /> */}
                 {/* <Contribution /> */}
                 {!user ? (
                   <CrossSell />
