@@ -31,8 +31,4 @@ export const apiEndpoints = {
   GET_ALL_PLANS: "api/plans/",
   CREATE_M_ORDER_REQUEST: "api/new-order/",
   CREATE_PAYPAL_ORDER_REQUEST: "api/paypal-new-order/",
-  CREATE_PAYPAL_PRODUCT_ORDER_REQUEST: "api/paypal-product-order/",
-  GET_PRODUCT_PLANS: "api/product-plans/",
-  CREATE_PRODUCT_ORDER_REQUEST: "api/product-order/",
-  GET_PRODUCT_SELLS: "api/product-sells/",
 };

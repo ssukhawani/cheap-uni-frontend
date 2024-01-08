@@ -225,20 +225,6 @@ export const getAllPlans = async () => {
   });
 };
 
-export const getProductPlans = async () => {
-  return await mainAxios({
-    method: "get",
-    url: apiEndpoints.GET_PRODUCT_PLANS,
-  });
-};
-
-export const getProductSell = async () => {
-  return await mainAxios({
-    method: "get",
-    url: apiEndpoints.GET_PRODUCT_SELLS,
-  });
-};
-
 // create new order request
 export const createMOrderRequest = async (membershipObj) => {
   return await mainAxios({
@@ -248,29 +234,11 @@ export const createMOrderRequest = async (membershipObj) => {
   });
 };
 
-// create new product request
-export const createProductOrderRequest = async (productObj) => {
-  return await mainAxios({
-    method: "post",
-    url: apiEndpoints.CREATE_PRODUCT_ORDER_REQUEST,
-    data: productObj,
-  });
-};
-
 // create new paypal order request
 export const createPaypalOrderRequest = async (membershipObj) => {
   return await mainAxios({
     method: "post",
     url: apiEndpoints.CREATE_PAYPAL_ORDER_REQUEST,
     data: membershipObj,
-  });
-};
-
-// create new paypal product order request
-export const createPaypalProductOrderRequest = async (productObj) => {
-  return await mainAxios({
-    method: "post",
-    url: apiEndpoints.CREATE_PAYPAL_PRODUCT_ORDER_REQUEST,
-    data: productObj,
   });
 };
