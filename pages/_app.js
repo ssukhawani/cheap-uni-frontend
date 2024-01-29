@@ -13,6 +13,7 @@ import { setupInterceptorsTo } from "../interceptor/Interceptors";
 import { QueryClientProvider, Hydrate } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { queryClient } from "../react-query/queryClient";
+import MaintenancePage from "../components/MaintenancePage";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -23,33 +24,39 @@ function MyApp({ Component, pageProps }) {
       appId: "31a1511d-89f6-46ae-b6ba-46b194f13053",
     });
   }, []);
-
+  const isMaintenance = true;
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-          <ReactQueryDevtools position={"bottom-right"} />
-        </Hydrate>
-      </QueryClientProvider>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={4000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        transition={Bounce}
-        style={{
-          width:'fit-content',
-        }}
-        limit={3}
-      />
+      {isMaintenance ? (
+        <MaintenancePage />
+      ) : (
+        <>
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+              <ReactQueryDevtools position={"bottom-right"} />
+            </Hydrate>
+          </QueryClientProvider>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={4000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            transition={Bounce}
+            style={{
+              width: "fit-content",
+            }}
+            limit={3}
+          />
+        </>
+      )}
     </>
   );
 }
