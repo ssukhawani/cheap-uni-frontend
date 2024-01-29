@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
       appId: "31a1511d-89f6-46ae-b6ba-46b194f13053",
     });
   }, []);
-  const isMaintenance = true;
+  const isMaintenance = false;
   return (
     <>
       {isMaintenance ? (
