@@ -8,6 +8,7 @@ import { AdsContainer } from "./AdsContainer";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import CrossSellHorizontal from "./CrossSellHorizontal";
+import { toast } from "react-toastify";
 
 export const getMeRandomNum = () => Math.floor(Math.random() * 4);
 
@@ -207,8 +208,17 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
                       onClick={
                         // () => getMeDownloadLinkAndRedirect(download.id)
                         // handleDownloadBySlug(false)
-                        () => window.open(download.short_link)
-                        // ()=>window.open("https://www.cheapuniverse.org/membership")
+                        // () => window.open(download.short_link)
+                        () => {
+                          toast.error(
+                            "Shareus links are down ! links are only accessible to Members"
+                          );
+                          setTimeout(() => {
+                            window.open(
+                              "https://www.cheapuniverse.org/membership"
+                            );
+                          }, 3000);
+                        }
                       }
                       className="hover:shadow-xl hover:scale-95 hover:bg-indigo-700 m-1 sm:my-2 transition duration-150 text-xs sm:text-base font-bold inline-block bg-pink-600 rounded-full text-white px-4 py-2 sm:px-8 sm:py-3 cursor-pointer"
                     >
@@ -222,7 +232,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
           <blockquote
             className={`otroBlockquote ${postStyles.otroBlockquote} mt-6`}
           >
-            Zip/rar files password can be one of these :- FreeCourseUniverse /
+            Zip/rar files password can be one of these :- FreeCourseUniverse OR
             CheapUniverse
           </blockquote>
           <AdsContainer
