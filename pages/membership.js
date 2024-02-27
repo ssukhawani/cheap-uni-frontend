@@ -209,7 +209,7 @@ const CrossSell = () => {
               Selected Plan: {selectedPlan.name} ({" "}
               {selectedPlan.duration_months} Months )
             </h3>
-            <p>Price: ${selectedPlan.price_in_dollar}</p>
+            <p>Price: ₹{selectedPlan.price}</p>
           </div>
         )}
 
