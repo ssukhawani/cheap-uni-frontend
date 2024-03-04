@@ -10,10 +10,9 @@ export const requestList = [
 
 export const featureList = [
   { name: "Unlimited downloads" },
-  { name: "No ads" },
-  { name: "Udemy" },
-  { name: "Coursera" },
-  { name: "Pluralsight" },
+  { name: "Udemy Courses" },
+  { name: "Coursera Courses " },
+  { name: "Pluralsight Courses" },
   { name: "CWM" },
   { name: "ZTM" },
   { name: "Envato Elements" },
