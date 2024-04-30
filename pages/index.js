@@ -216,9 +216,11 @@ export default function Home() {
           <div className="lg:sticky relative top-8">
             {/* <PromoteOnSidebar /> */}
             {!user && !noob ? (
-              <CrossSell />
+              // <CrossSell />
+              <></>
             ) : user.role != "P" ? (
-              <CrossSell />
+              // <CrossSell />
+              <></>
             ) : (
               <></>
             )}

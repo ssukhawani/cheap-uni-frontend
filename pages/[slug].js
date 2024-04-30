@@ -79,7 +79,7 @@ const PageDetails = () => {
           </div>
           <div className="col-span-1 lg:col-span-4">
             <div className="relative lg:sticky top-8">
-              <PromoteOnSidebar />
+              {/* <PromoteOnSidebar /> */}
               <DigitalOcean />
               <PostWidgets />
               <Categories />

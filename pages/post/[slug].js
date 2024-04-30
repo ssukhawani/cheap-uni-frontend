@@ -174,9 +174,11 @@ const PostDetails = () => {
               <div className="relative lg:sticky top-8">
                 {/* <Contribution /> */}
                 {!user ? (
-                  <CrossSell />
+                  // <CrossSell />
+                  <></>
                 ) : user.role != "P" ? (
-                  <CrossSell />
+                  // <CrossSell />
+                  <></>
                 ) : (
                   <></>
                 )}
