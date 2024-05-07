@@ -177,7 +177,7 @@ const CrossSell = () => {
     <div className="px-6 xl:px-20 md:px-10 md:py-12 py-9 mt-8 2xl:mx-auto 2xl:container md:flex items-center justify-center ">
       <div className="mt-10 bg-white shadow-lg md:w-1/2 w-full lg:px-10 px-6 sm:py-10 py-6 rounded-tl-3xl rounded-br-3xl">
         <h2 className="text-2xl font-bold">Membership has been closed...</h2>
-        {/* <div className="flex flex-col space-y-2 my-6">
+        <div className="flex flex-col space-y-2 my-6">
           {plans.map((plan, index) => (
             <div
               key={index}
@@ -280,7 +280,7 @@ const CrossSell = () => {
               </p>
             )}
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
