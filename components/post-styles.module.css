@@ -47,19 +47,21 @@
 }
 
 .otroBlockquote {
-  @apply py-4 px-10 relative text-xs sm:text-base;
+  @apply py-4 px-10 relative text-xs sm:text-base text-red-500;
   width: 100%;
-  font-style: normal;
-  color: #555555;
+  font-style: bold;
   border-left: 8px solid gray;
   line-height: 1.24;
-  background: #ededed;
+  background: black;
   text-align: center;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
 }
 
 .otroBlockquote::before {
   content: "\201C";
-  color: black;
+  color: white;
   font-size: 4em;
   position: absolute;
   left: 10px;
@@ -68,11 +70,31 @@
 
 .otroBlockquote::after {
   content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shiny 3s infinite;
 }
+
+@keyframes shiny {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
 
 .otroBlockquote span {
   @apply font-semibold mt-2 text-xs block sm:text-base;
-  color: #333333;
+  color: white;
   font-style: normal;
 }
 

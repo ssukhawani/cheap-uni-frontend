@@ -222,8 +222,10 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
           <blockquote
             className={`otroBlockquote ${postStyles.otroBlockquote} mt-6`}
           >
-            Zip/rar files password can be one of these :- FreeCourseUniverse OR
-            CheapUniverse
+            Password can be one of these :- <span>CheapUniverse  &nbsp; &nbsp; &nbsp;  OR   &nbsp; &nbsp; &nbsp;  FreeCourseUniverse
+            </span>
+            <br />
+            If u face any issues with the link, email us at  -  <span> harry@freecourseuniverse.com </span>
           </blockquote>
           <AdsContainer
             client={"ca-pub-2093009960356176"}
