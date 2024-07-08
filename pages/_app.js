@@ -14,6 +14,7 @@ import { QueryClientProvider, Hydrate } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { queryClient } from "../react-query/queryClient";
 import MaintenancePage from "../components/MaintenancePage";
+import PopupForm from "../components/PopupForm";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -55,6 +56,7 @@ function MyApp({ Component, pageProps }) {
             }}
             limit={3}
           />
+          <PopupForm />
         </>
       )}
     </>
