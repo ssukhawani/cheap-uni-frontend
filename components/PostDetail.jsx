@@ -205,7 +205,9 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
                 post.downloads.map((download) => (
                   <div className="inline-block sm:m-2" key={download.id}>
                     <span
-                      onClick={
+                      onClick={()=>{
+                        toast.warning("Currently servers are down !");
+                      }
                         // () => getMeDownloadLinkAndRedirect(download.id)
                         // handleDownloadBySlug(false)
                         // () => window.open(download.short_link)
