@@ -206,7 +206,7 @@ const PostDetail = ({ post, decisionLists, handleDownloadBySlug, user }) => {
                   <div className="inline-block sm:m-2" key={download.id}>
                     <span
                       onClick={()=>{
-                        toast.warning("Currently servers are down !");
+                        toast.warning("Downloading allowed only for membership users !");
                       }
                         // () => getMeDownloadLinkAndRedirect(download.id)
                         // handleDownloadBySlug(false)
