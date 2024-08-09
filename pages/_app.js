@@ -56,7 +56,7 @@ function MyApp({ Component, pageProps }) {
             }}
             limit={3}
           />
-          {/* <PopupForm /> */}
+          <PopupForm />
         </>
       )}
     </>
