@@ -181,11 +181,10 @@ const CrossSell = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`p-4 rounded cursor-pointer flex items-center justify-between ${
-                selectedPlan === plan
+              className={`p-4 rounded cursor-pointer flex items-center justify-between ${selectedPlan === plan
                   ? "bg-white text-black z-0 border border-indigo-500"
                   : "bg-white border rounded-md focus:outline-none hover:border-indigo-500"
-              }`}
+                }`}
               onClick={() => handlePlanSelection(plan)}
             >
               <li>{plan.name}</li>
@@ -227,63 +226,60 @@ const CrossSell = () => {
           <div className="mb-4">
             <div className="flex flex-col md:flex-row">
               {decisionLists.length > 0 && decisionLists.includes("9") && (
-                <div className="mb-4 md:mr-4">
-                  <button
-                    onClick={handleRazorpayPayment}
-                    className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${
-                      isLoadingRazorpay ? "py-1" : "py-4"
-                    } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${
-                      isLoadingRazorpay && "opacity-50 cursor-not-allowed"
-                    }`}
-                    disabled={isLoadingPayPal}
-                  >
-                    {isLoadingRazorpay ? (
-                      <Image
-                        height={42}
-                        width={40}
-                        src={Loading}
-                        alt="loading..."
-                      />
-                    ) : (
-                      "Pay with Razorpay"
-                    )}
-                  </button>
-                </div>
+                <>
+                  <div className="mb-4 md:mr-4">
+                    <button
+                      onClick={handleRazorpayPayment}
+                      className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6 ${isLoadingRazorpay ? "py-1" : "py-4"
+                        } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 ${isLoadingRazorpay && "opacity-50 cursor-not-allowed"
+                        }`}
+                      disabled={isLoadingPayPal}
+                    >
+                      {isLoadingRazorpay ? (
+                        <Image
+                          height={42}
+                          width={40}
+                          src={Loading}
+                          alt="loading..."
+                        />
+                      ) : (
+                        "Pay with Razorpay"
+                      )}
+                    </button>
+                  </div>
+                  <div className="mb-4">
+                    <button
+                      onClick={handlePayPalPayment}
+                      className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6  ${isLoadingPayPal ? "py-1" : "py-4"
+                        } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-800 ${isLoadingPayPal && "opacity-50 cursor-not-allowed"
+                        }`}
+                      disabled={isLoadingRazorpay}
+                    >
+                      {isLoadingPayPal ? (
+                        <Image
+                          height={42}
+                          width={40}
+                          src={Loading}
+                          alt="loading..."
+                        />
+                      ) : (
+                        "Pay with PayPal"
+                      )}
+                    </button>
+                  </div>
+                </>
               )}
 
-              <div className="mb-4">
-                <button
-                  onClick={handlePayPalPayment}
-                  className={`flex items-center justify-center focus:ring-2 focus:ring-offset-2 px-6  ${
-                    isLoadingPayPal ? "py-1" : "py-4"
-                  } focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-800 ${
-                    isLoadingPayPal && "opacity-50 cursor-not-allowed"
-                  }`}
-                  disabled={isLoadingRazorpay}
-                >
-                  {isLoadingPayPal ? (
-                    <Image
-                      height={42}
-                      width={40}
-                      src={Loading}
-                      alt="loading..."
-                    />
-                  ) : (
-                    "Pay with PayPal"
-                  )}
-                </button>
-              </div>
+              {decisionLists.length > 0 && !decisionLists.includes("9") && (
+                <p className="text-[#FF1E00] font-bold text-sm block">
+                  Membership has been closed...
+                </p>
+              )}
             </div>
-            {decisionLists.length > 0 && !decisionLists.includes("9") && (
-              <p className="text-[#FF1E00] font-bold text-sm block">
-                Membership has been closed for indian users...
-              </p>
-            )}
           </div>
         </div>
       </div>
-    </div>
-  );
+      );
 };
 
-export default CrossSell;
+      export default CrossSell;
