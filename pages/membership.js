@@ -269,6 +269,7 @@ const CrossSell = () => {
                   </div>
                 </>
               )}
+              </div>
 
               {decisionLists.length > 0 && !decisionLists.includes("9") && (
                 <p className="text-[#FF1E00] font-bold text-sm block">
